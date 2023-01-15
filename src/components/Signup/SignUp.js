@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const navigate = useNavigate();
   const [isloggedin, setisloggedin] = useState(false);
+
   const emailInput = useRef();
   const passInput = useRef();
   const confirmpass = useRef();
@@ -33,6 +34,7 @@ const SignUp = () => {
               "Content-Type": "application/json"
             }
           });
+
           console.log("signup--", await signup.json());
           //  history("/");
         } catch (error) {
@@ -61,7 +63,7 @@ const SignUp = () => {
         let data = await login.json();
         console.log("login--", data.idToken);
         navigate("./welcome");
-        // localStorage.setItem("token", data.idToken);
+        localStorage.setItem("token", data.idToken);
         // authCtx.login(data.idToken);
         // history("/");
       } catch (error) {

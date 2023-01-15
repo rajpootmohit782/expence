@@ -1,8 +1,39 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 const Profile = () => {
   const fullname = useRef();
   const picRef = useRef();
+
+  const [nameValue, setNamevalue] = useState();
+  //
+ 
+ const inirunfun =  async() => {
+   try{
+      const initialprofilevalue = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyC1cHwbFf5M0-WkzZzuui1ilakaxz8Og2c",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            idToken: localStorage.getItem("token")
+          })
+        }
+      );
+      const res = await initialprofilevalue.json();
+      console.log(res.users.[0].displayName);
+      setNamevalue(res.users.[0].displayName)
+      // localStorage.setItem("name", res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //console.log(localStorage.getItem("name"));
+  //inirunfun();
+  useEffect(()=>inirunfun(),[])
+  const Fullnamechange = (e) => {
+    const value = e.target.value;
+    console.log(value);
+    setNamevalue(value)
+  };
 
   const update = async () => {
     const enterdname = fullname.current.value;
@@ -13,18 +44,20 @@ const Profile = () => {
       "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyC1cHwbFf5M0-WkzZzuui1ilakaxz8Og2c";
 
     try {
-      const update = await fetch(url, {
+      const updating = await fetch(url, {
         method: "POST",
         body: JSON.stringify({
+          idToken: localStorage.getItem("token"),
           displayName: enterdname,
-          photoUrl: piclink,
+          //photoUrl: piclink,
           returnSecureToken: true
         }),
         headers: {
           "Content-Type": "application/json"
         }
       });
-      console.log("update--", await update.json());
+      console.log("update--", await updating.json());
+      inirunfun();
       //  history("/");
     } catch (error) {
       console.log(error);
@@ -45,11 +78,11 @@ const Profile = () => {
             {" "}
             Contact Details
           </h1>
-          <Link to={"/"}>
-            {" "}
+          <Link to={'/welcome'}>
+            
             <button style={{ marginRight: "10rem", marginTop: "15rem" }}>
               Cancel
-            </button>{" "}
+            </button>
           </Link>
         </div>
         <div
@@ -60,7 +93,12 @@ const Profile = () => {
         >
           <div>
             <label htmlFor="name">Full name :</label>
-            <input ref={fullname} type="text" />
+            <input
+              onChange={Fullnamechange}
+              value={nameValue}
+              ref={fullname}
+              type="text"
+            />
           </div>
           <div>
             <label>profile photo url:</label>
