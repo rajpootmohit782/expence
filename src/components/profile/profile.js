@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 const Profile = () => {
   const fullname = useRef();
   const picRef = useRef();
+  const code = useRef();
 
   const [nameValue, setNamevalue] = useState();
-  //
+  const [emailverify, setemailvarify] = useState(false);
  
  const inirunfun =  async() => {
    try{
@@ -19,7 +20,7 @@ const Profile = () => {
         }
       );
       const res = await initialprofilevalue.json();
-      console.log(res.users.[0].displayName);
+      console.log(res.users.[0].displayName)
       setNamevalue(res.users.[0].displayName)
       // localStorage.setItem("name", res);
     } catch (error) {
@@ -28,12 +29,59 @@ const Profile = () => {
   }
   //console.log(localStorage.getItem("name"));
   //inirunfun();
-  useEffect(()=>inirunfun(),[])
+  useEffect(()=> inirunfun(),[])
+//<h3>Code<input ref={code} type='text'/><button onClick={()=>verifycode()}>Verify</button></h3>
+  // const verifycode = async(e) => {
+  //   const value = code.current.value
+  //   console.log(value);
+  //   setemailvarify(value)
+  //  // setNamevalue(value)
+  //  try{
+  //   const initialprofilevalue = await fetch(
+  //     "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyC1cHwbFf5M0-WkzZzuui1ilakaxz8Og2c",
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         oobCode: value,
+  //       })
+  //     }
+  //   );
+  //   const res = await initialprofilevalue.json();
+  //   console.log(res)
+  //  // setNamevalue(res.users.[0].displayName)
+  //   // localStorage.setItem("name", res);
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  // };
+
   const Fullnamechange = (e) => {
     const value = e.target.value;
     console.log(value);
     setNamevalue(value)
   };
+
+  const verifyemail=async()=>{
+    try{
+      const initialprofilevalue = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyC1cHwbFf5M0-WkzZzuui1ilakaxz8Og2c",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            requestType: "VERIFY_EMAIL",
+            idToken: localStorage.getItem("token")
+          })
+        }
+      );
+      const res = await initialprofilevalue.json();
+      console.log(res)
+      setemailvarify(true)
+      
+      // localStorage.setItem("name", res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const update = async () => {
     const enterdname = fullname.current.value;
@@ -122,6 +170,8 @@ const Profile = () => {
           >
             Update
           </button>
+          <h2>varify your email <button onClick={()=>verifyemail()}>click</button></h2>
+          {emailverify && <h3>check your email you receive code there</h3>  }
         </div>
       </div>
     </div>
