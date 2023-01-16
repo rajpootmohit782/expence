@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense tracker</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <h1>Expence traker App</h1>
+    <form action="#" id="form">
+      <label>Choose expence amount</label>
+      <input type="number" id="amount" required />
+      <label>Choose description</label>
+      <input type="text" id="des" required />
+      <label>Choose a catogery</label>
+      <select
+        style="background-color: rgb(172, 159, 159)"
+        name="catogery"
+        id="catogery"
+      >
+        <option value="Fuel">Fuel</option>
+        <option value="Market">Market</option>
+        <option value="Movie">Movie</option>
+        <option value="Shopping">Shopping</option>
+      </select>
+
+      <button id="submit">Submit</button>
+      <ul id="result"></ul>
+      <div id="clear"></div>
+    </form>
+    <ul id="listOfPeople"></ul>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+  <script src="apps.js"></script>
+</html>

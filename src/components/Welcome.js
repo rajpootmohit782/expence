@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ExpensesTrac from "../components/Expense/ExpensesTrac";
 const Welcome = () => {
   return (
     <div>
@@ -9,6 +10,7 @@ const Welcome = () => {
           <Link to={"/updateprofile"}> Complete now</Link>
         </div>
       </div>
+      <ExpensesTrac />
     </div>
   );
 };
