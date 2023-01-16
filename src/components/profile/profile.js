@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate,NavLink } from "react-router-dom";
 const Profile = () => {
   const fullname = useRef();
   const picRef = useRef();
-  const code = useRef();
+ // const code = useRef();
+ const navigate = useNavigate()
 
   const [nameValue, setNamevalue] = useState();
   const [emailverify, setemailvarify] = useState(false);
@@ -54,6 +55,15 @@ const Profile = () => {
   //   console.log(error);
   // }
   // };
+
+  const logmeout =()=>{
+    const lvalue = localStorage.getItem('token')
+    console.log(lvalue)
+    localStorage.removeItem('token')
+    const mvalue = localStorage.getItem('token')
+    console.log(mvalue)
+   // navigate('/')
+  }
 
   const Fullnamechange = (e) => {
     const value = e.target.value;
@@ -115,7 +125,9 @@ const Profile = () => {
 
   return (
     <div>
+      
       <div>
+     <Link to={'/'}> <button onClick={()=> logmeout()}>Logout</button> </Link>
         <div
           style={{
             display: "flex",
@@ -126,12 +138,12 @@ const Profile = () => {
             {" "}
             Contact Details
           </h1>
-          <Link to={'/welcome'}>
+          <NavLink to={'/welcome'}>
             
             <button style={{ marginRight: "10rem", marginTop: "15rem" }}>
               Cancel
             </button>
-          </Link>
+          </NavLink>
         </div>
         <div
           style={{
