@@ -4,7 +4,7 @@ const Profile = () => {
   const fullname = useRef();
   const picRef = useRef();
  // const code = useRef();
- const navigate = useNavigate()
+ //const navigate = useNavigate()
 
   const [nameValue, setNamevalue] = useState();
   const [emailverify, setemailvarify] = useState(false);

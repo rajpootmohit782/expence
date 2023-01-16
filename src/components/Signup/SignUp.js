@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -86,6 +86,11 @@ const SignUp = () => {
         <br />
         <button>Submit</button>
       </form>
+      {isloggedin && (
+        <Link to={"/forgetpassword"}>
+          <h3>Forget password</h3>
+        </Link>
+      )}
       <div style={{ border: "2px solid blue" }}>
         {!isloggedin && (
           <div onClick={() => setisloggedin(true)}>
